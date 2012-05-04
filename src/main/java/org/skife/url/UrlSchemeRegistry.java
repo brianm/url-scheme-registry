@@ -27,7 +27,6 @@ public class UrlSchemeRegistry
         }
 
         synchronized (System.getProperties()) {
-            registeredPackages.add(pkg);
             if (System.getProperties().contains(KEY)) {
                 String current = System.getProperty(KEY);
                 if (!current.contains(pkg)) {
