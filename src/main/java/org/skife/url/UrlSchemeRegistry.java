@@ -24,7 +24,6 @@ public class UrlSchemeRegistry
         if (!registeredPackages.add(pkg)) {
             // short circuit package re-registration
             return;
-            URL.setURLStreamHandlerFactory();
         }
 
         synchronized (System.getProperties()) {
