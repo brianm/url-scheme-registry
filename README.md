@@ -1,5 +1,15 @@
-Library to make it easy to register new URL schemes for
-java.net.URL. Consider the URL handler:
+Library to make it easy to register new URL schemes for java.net.URL.
+Consider:
+
+    @Test
+    public void testRegisterHandler() throws Exception
+    {
+        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
+
+        assertThat(read(new URL("dinner://steak"))).isEqualTo("steak");
+    }
+
+which uses the URL handler:
 
     public class DinnerHandler extends URLStreamHandler
     {
@@ -19,16 +29,6 @@ java.net.URL. Consider the URL handler:
           }
         };
       }
-    }
-
-Which can then be registered globally to the dinner scheme like:
-
-    @Test
-    public void testRegisterHandler() throws Exception
-    {
-        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
-
-        assertThat(readBody(new URL("dinner://steak"))).isEqualTo("steak");
     }
 
 The library uses the <code>java.protocol.handler.pkgs</code> system

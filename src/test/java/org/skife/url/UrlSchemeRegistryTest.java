@@ -13,6 +13,22 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class UrlSchemeRegistryTest
 {
+
+    @Test
+    public void testRegisterHandler() throws Exception
+    {
+        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
+
+        assertThat(read(new URL("dinner://steak"))).isEqualTo("steak");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testOnlyAllowsOneSchemePerUrl() throws Exception
+    {
+        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
+        UrlSchemeRegistry.register("dinner", DinnerHandler2.class);
+    }
+
     @Test
     public void testSinglePackageRegistration() throws Exception
     {
@@ -32,26 +48,11 @@ public class UrlSchemeRegistryTest
         UrlSchemeRegistry.registerPackage("org.skife.url.two");
 
 
-        assertThat(readBody(new URL("breakfast://pancakes"))).isEqualTo("pancakes");
-        assertThat(readBody(new URL("lunch://sammy"))).isEqualTo("sammy");
+        assertThat(read(new URL("breakfast://pancakes"))).isEqualTo("pancakes");
+        assertThat(read(new URL("lunch://sammy"))).isEqualTo("sammy");
     }
 
-    @Test
-    public void testRegisterHandler() throws Exception
-    {
-        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
-
-        assertThat(readBody(new URL("dinner://steak"))).isEqualTo("steak");
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testOnlyAllowsOneSchemePerUrl() throws Exception
-    {
-        UrlSchemeRegistry.register("dinner", DinnerHandler.class);
-        UrlSchemeRegistry.register("dinner", DinnerHandler2.class);
-    }
-
-    private static String readBody(URL url) throws IOException
+    private static String read(URL url) throws IOException
     {
         Reader r = new InputStreamReader(url.openStream(), Charsets.UTF_8);
         String body = CharStreams.toString(r);
