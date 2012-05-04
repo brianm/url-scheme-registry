@@ -29,6 +29,10 @@ public class UrlSchemeRegistryTest
         UrlSchemeRegistry.register("dinner", DinnerHandler2.class);
     }
 
+
+
+    /* Tests for internal package registration logic -- registerPackage is NOT public API */
+
     @Test
     public void testSinglePackageRegistration() throws Exception
     {
