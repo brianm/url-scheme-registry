@@ -3,7 +3,7 @@
     <groupId>org.skife.url</groupId>
     <artifactId>url-scheme-registry</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>url-scheme-registry</name>
     <url>http://github.com/brianm/url-scheme-registry</url>
     <description>
